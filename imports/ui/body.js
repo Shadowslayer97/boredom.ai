@@ -26,13 +26,26 @@ Template.chatForm.helpers({
 Template.chatForm.events({
   'click button': function() {
     // Message
+    var userText = document.getElementById('message').value;
     var messageDict = {
-      text: document.getElementById('message').value,
+      text: userText,
       orientation: "right",
       img: "right.png"
     }
-
     chatArr.push(messageDict);
-    console.log(messageDict);
+    Meteor.call('userRequest',{userText:userText},function(error,result){
+      if(error) console.log(error);
+      console.log(result);
+      var messageDict = {
+        text: result,
+        orientation: "left",
+        img: "left.png"
+      }
+      console.log(result);
+      chatArr.push(messageDict);
+    });
   },
-})
+});
+
+
+// helper functions

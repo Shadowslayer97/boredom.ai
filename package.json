@@ -10,6 +10,8 @@
   "dependencies": {
     "@babel/runtime": "^7.1.5",
     "apiai": "^4.0.3",
+    "fibers": "^3.1.1",
+    "future": "^2.3.1",
     "meteor-node-stubs": "^0.4.1"
   },
   "meteor": {
