@@ -1,0 +1,20 @@
+
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Boredom.AI</h1>
+    </header>
+    {{> chatItem}}
+  </div>
+</body>
+
+<template name="chatItem">
+  <ul>
+    {{#each chats}}
+      <li style="float:{{orientation}};">{{@index}} {{text}} </li>
+    {{/each}}
+  </ul>
+
+
+</template>
