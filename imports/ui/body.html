@@ -5,16 +5,21 @@
     <header>
       <h1>Boredom.AI</h1>
     </header>
-    {{> chatItem}}
+    {{> chatList}}
+    {{> chatForm}}
   </div>
 </body>
 
-<template name="chatItem">
-  <ul>
+<template name="chatList">
     {{#each chats}}
-      <li style="float:{{orientation}};">{{@index}} {{text}} </li>
+      <div class="chat-container darker">
+        <img src="{{img}}" alt="Just a text" class="{{orientation}}">
+        <p class="chat-item"> {{text}}</p>
+      </div>
     {{/each}}
-  </ul>
+</template>
 
-
+<template name="chatForm">
+  <input type="text" placeholder="Enter your message..." id="message" name="message"/>
+  <button type="button" class="btn btn-primary" name="button"> Send Message </button>
 </template>
