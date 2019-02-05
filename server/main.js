@@ -38,9 +38,12 @@ Meteor.methods({
 });
 
 //REST API Routes
-Router.route('/api/v1/movie', {where: 'server'})
+Router.route('/movie', {where: 'server'})
   .post(function () {
-    var movieName = this.request.body.result && this.request.body.result.parameters && this.request.body.result.parameters.movie ? this.request.body.result.parameters.movie : 'The Godfather';
+    console.log(this.request.body);
+    this.response.setHeader('Content-Type', 'application/json');
+    var movieName = this.request.body.result.parameters.Movie;
+    // var movieName = this.request.body.result && this.request.body.result.parameters && this.request.body.result.parameters.movie ? this.request.body.result.parameters.movie : 'The Godfather';
     console.log(movieName);
     var that = this;
     var reqUrl = omdbApiUrl + movieName + "&apiKey=" + config.OMDB_API_KEY;
@@ -51,13 +54,14 @@ Router.route('/api/v1/movie', {where: 'server'})
        });
        apiResponse.on('end', function() {
            var movie = JSON.parse(completeResponse);
+           console.log(movie);
            var dataToSend = movieName === 'The Godfather' ? `I don't have the required info on that. Here's some info on 'The Godfather' instead.\n` : '';
-           dataToSend += `${movie.Title} is a ${movie.Actors} starer ${movie.Genre} movie, released in ${movie.Year}. It was directed by ${movie.Director}`;
+           dataToSend += movie.Title + " is a"+movie.Actors+" starer"+ movie.Genre+" movie, released in "+movie.Year+". It was directed by "+movie.Director;
 
            var movieData = {
                speech: dataToSend,
                displayText: dataToSend,
-               source: 'get-movie-details'
+               source: 'movie'
             };
             that.response.writeHead(200);
             that.response.end(JSON.stringify(movieData));
@@ -68,6 +72,3 @@ Router.route('/api/v1/movie', {where: 'server'})
       that.response.end(JSON.stringify(err));
     })
   });
-
-WebApp.connectHandlers.use('/movie',function(req,res,next) {
-});
