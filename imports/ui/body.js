@@ -24,7 +24,7 @@ Template.chatForm.helpers({
 })
 
 Template.chatForm.events({
-  'click button': function() {
+  'click #send-message': function() {
     // Message
     var userText = document.getElementById('message').value;
     var messageDict = {
@@ -45,6 +45,12 @@ Template.chatForm.events({
       chatArr.push(messageDict);
     });
   },
+  'click #trial': function() {
+    Meteor.call('movieRequest','tangled',function(error,result){
+      if(error) console.log(error)
+      console.log(result);
+    })
+  }
 });
 
 
